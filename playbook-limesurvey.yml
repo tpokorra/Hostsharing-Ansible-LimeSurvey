@@ -23,8 +23,14 @@
   ##################################
   ## install LimeSurvey
   ##################################
-
-  # TODO
+  - name: install limesurvey
+    become: yes
+    become_user: "{{pac}}-{{user}}"
+    unarchive:
+      creates: /home/pacs/{{pac}}/users/{{user}}/limesurvey
+      src: https://download.limesurvey.org/latest-stable-release/limesurvey{{limesurvey_release}}.zip
+      remote_src: yes
+      dest: /home/pacs/{{pac}}/users/{{user}}
 
   ##################################
   ## configuration
@@ -41,5 +47,16 @@
   ########################
   ## setup the apache site
   ########################
-
-  # TODO
+  - name: drop htdocs-ssl
+    become: yes
+    become_user: "{{pac}}-{{user}}"
+    file:
+       path: "/home/pacs/{{pac}}/users/{{user}}/doms/{{domain}}/htdocs-ssl"
+       state: absent
+  - name: create symbolic link for htdocs-ssl
+    become: yes
+    become_user: "{{pac}}-{{user}}"
+    file:
+      src: "/home/pacs/{{pac}}/users/{{user}}/limesurvey"
+      dest: "/home/pacs/{{pac}}/users/{{user}}/doms/{{domain}}/htdocs-ssl"
+      state: link

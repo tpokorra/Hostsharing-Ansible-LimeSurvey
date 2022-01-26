@@ -7,3 +7,5 @@ limesurvey:
       domain: survey.example.org
       user: survey
       password: testpassw0rd_changeme
+
+      limesurvey_release: 5.2.11+220124
