@@ -8,4 +8,12 @@ limesurvey:
       user: survey
       password: testpassw0rd_changeme
 
-      limesurvey_release: 5.2.11+220124
+      admin_user_name: lime_admin
+      admin_user_password: topsecret
+      admin_full_name: "Administrator"
+      admin_email: admin@example.org
+
+      sessionname: 16CAPITALCHARACTERS
+
+      # see https://community.limesurvey.org/downloads/
+      limesurvey_release: 5.3.13+220509

@@ -35,24 +35,44 @@
   ##################################
   ## configuration
   ##################################
-
-  # TODO
+  - name: upload config file
+    become: yes
+    become_user: "{{pac}}-{{user}}"
+    template: dest="/home/pacs/{{pac}}/users/{{user}}/limesurvey/application/config/config.php" src="templates/config.php" mode=0600
 
   ######################
   ## initialise instance
   ######################
-
-  # TODO
+  - name: initialise instance
+    become: yes
+    become_user: "{{pac}}-{{user}}"
+    # see https://manual.limesurvey.org/Installation_using_a_command_line_interface_(CLI)
+    shell: |
+        php console.php install {{admin_user_name}} {{admin_user_password}} {{admin_full_name}} {{admin_email}} || exit -1
+        touch /home/pacs/{{pac}}/users/{{user}}/.ansible_initialised
+    args:
+      executable: /bin/bash
+      chdir: "/home/pacs/{{pac}}/users/{{user}}/limesurvey/application/commands"
+      creates: "/home/pacs/{{pac}}/users/{{user}}/.ansible_initialised"
 
   ########################
   ## setup the apache site
   ########################
-  - name: drop htdocs-ssl
+  - name: check for htdocs-ssl directory
+    become: yes
+    become_user: "{{pac}}-{{user}}"
+    stat:
+      path: "/home/pacs/{{pac}}/users/{{user}}/doms/{{domain}}/htdocs-ssl"
+    register: htdocs_exists
+
+  - name: drop htdocs-ssl directory
     become: yes
     become_user: "{{pac}}-{{user}}"
     file:
-       path: "/home/pacs/{{pac}}/users/{{user}}/doms/{{domain}}/htdocs-ssl"
-       state: absent
+      path: "/home/pacs/{{pac}}/users/{{user}}/doms/{{domain}}/htdocs-ssl"
+      state: absent
+    when: htdocs_exists.stat.islnk is defined and htdocs_exists.stat.islnk == False
+
   - name: create symbolic link for htdocs-ssl
     become: yes
     become_user: "{{pac}}-{{user}}"
