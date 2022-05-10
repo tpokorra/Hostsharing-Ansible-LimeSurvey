@@ -13,6 +13,10 @@ limesurvey:
       admin_full_name: "Administrator"
       admin_email: admin@example.org
 
+      siteadminemail: "no-reply@survey.example.org"
+      siteadminbounce: "admin@survey.example.org"
+      siteadminname: "Administrator at survey.example.org"
+
       sessionname: 16CAPITALCHARACTERS
 
       # see https://community.limesurvey.org/downloads/

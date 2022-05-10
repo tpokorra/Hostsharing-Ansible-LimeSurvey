@@ -35,10 +35,15 @@
   ##################################
   ## configuration
   ##################################
-  - name: upload config file
+  - name: upload db config file
     become: yes
     become_user: "{{pac}}-{{user}}"
     template: dest="/home/pacs/{{pac}}/users/{{user}}/limesurvey/application/config/config.php" src="templates/config.php" mode=0600
+
+  - name: upload email config file
+    become: yes
+    become_user: "{{pac}}-{{user}}"
+    template: dest="/home/pacs/{{pac}}/users/{{user}}/limesurvey/application/config/email.php" src="templates/email.php" mode=0600
 
   ######################
   ## initialise instance
