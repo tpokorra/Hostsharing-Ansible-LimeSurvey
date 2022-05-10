@@ -1,0 +1,22 @@
+limesurvey:
+  hosts:
+    {{pac}}-{{username}}:
+      ansible_ssh_host: {{pac}}.hostsharing.net
+      ansible_ssh_user: {{pac}}
+      pac: {{pac}}
+      domain: {{domain}}
+      user: {{username}}
+      password: {{password}}
+
+      admin_user_name: lime_admin
+      admin_user_password: {{RandomPassword}}
+      admin_full_name: "Administrator"
+      admin_email: no-reply@solidcharity.com
+
+      sessionname: {{password2}}
+
+      # see https://community.limesurvey.org/downloads/
+      limesurvey_release: 5.3.13+220509
+
+      SaasActivationPassword: {{SaasActivationPassword}}
+      SaasInstanceStatus: {{SaasInstanceStatus}}
