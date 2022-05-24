@@ -21,10 +21,8 @@ if (!is_run_from_cli()) {
 }
 
 try {
-    $DB_NAME = "{{pac}}_{{user}}";
-    $DB_USER = "{{pac}}_{{user}}";
-    $DB_PASSWORD = "{{password}}";
-    $pdo = new PDO('mysql:host=localhost;dbname='.$DB_NAME, $DB_USER, $DB_PASSWORD);
+    $pdo = new PDO('mysql:host=localhost;dbname={{pac}}_{{user}}', '{{pac}}_{{user}}', '{{password}}');
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     # deactivate all users
     $sql = "update lime_users set email=CONCAT(email,'disabled'), password=CONCAT(password,'disabled') where email NOT LIKE '%disabled'";
     $statement = $pdo->prepare($sql);

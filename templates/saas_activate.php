@@ -17,10 +17,8 @@ try {
     exit(1);
   }
 
-  $DB_NAME = "{{pac}}_{{user}}";
-  $DB_USER = "{{pac}}_{{user}}";
-  $DB_PASSWORD = "{{password}}";
-  $pdo = new PDO('mysql:host=localhost;dbname='.$DB_NAME, $DB_USER, $DB_PASSWORD);
+  $pdo = new PDO('mysql:host=localhost;dbname={{pac}}_{{user}}', '{{pac}}_{{user}}', '{{password}}');
+  $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   $sql = "update lime_users set email=:email where uid=1";
   $statement = $pdo->prepare($sql);
   $statement->execute(array(':email' => $USER_EMAIL_ADDRESS));
