@@ -1,0 +1,64 @@
+---
+- hosts: limesurvey
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
+  tasks:
+  - name: create directory backup
+    become: yes
+    become_user: "{{pac}}-{{user}}"
+    file:
+      path: "/home/pacs/{{pac}}/users/{{user}}/backup"
+      state: directory
+
+  - name: backup config files and uploads
+    become: yes
+    become_user: "{{pac}}-{{user}}"
+    shell: |
+      tar czf backup-`date +'%Y%m%d'`.tar.gz ../limesurvey/application/config/ ../limesurvey/upload/ || exit -1
+    args:
+      executable: /bin/bash
+      chdir: "/home/pacs/{{pac}}/users/{{user}}/backup"
+
+  - name: drop limesurvey directory
+    become: yes
+    become_user: "{{pac}}-{{user}}"
+    file:
+      state: absent
+      path: "/home/pacs/{{pac}}/users/{{user}}/limesurvey"
+
+  - name: install latest limesurvey
+    become: yes
+    become_user: "{{pac}}-{{user}}"
+    unarchive:
+      creates: /home/pacs/{{pac}}/users/{{user}}/limesurvey
+      src: https://download.limesurvey.org/latest-stable-release/limesurvey{{limesurvey_release}}.zip
+      remote_src: yes
+      dest: /home/pacs/{{pac}}/users/{{user}}
+
+  - name: restore config files and uploads
+    become: yes
+    become_user: "{{pac}}-{{user}}"
+    shell: |
+      tar xzf backup/backup-`date +'%Y%m%d'`.tar.gz
+    args:
+      executable: /bin/bash
+      chdir: "/home/pacs/{{pac}}/users/{{user}}"
+
+  - name: update limesurvey
+    become: yes
+    become_user: "{{pac}}-{{user}}"
+    shell: |
+      php application/commands/console.php updatedb || exit -1
+    args:
+      executable: /bin/bash
+      chdir: "/home/pacs/{{pac}}/users/{{user}}/limesurvey"
+
+  - name: delete old backups after 30 days
+    become: yes
+    become_user: "{{pac}}-{{user}}"
+    shell: |
+      find /home/pacs/{{pac}}/users/{{user}}/backup -name "backup*.tar.gz" -type f -mtime +30 -delete || exit -1
+    args:
+      executable: /bin/bash
+      chdir: "/home/pacs/{{pac}}/users/{{user}}/backup"
