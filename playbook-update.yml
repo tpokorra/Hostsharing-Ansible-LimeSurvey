@@ -15,7 +15,11 @@
     become: yes
     become_user: "{{pac}}-{{user}}"
     shell: |
-      tar czf backup-`date +'%Y%m%d'`.tar.gz ../limesurvey/application/config/ ../limesurvey/upload/ || exit -1
+      tar czf backup-`date +'%Y%m%d'`.tar.gz \
+         ../limesurvey/application/config/security.php \
+         ../limesurvey/application/config/config.php \
+         ../limesurvey/application/config/email.php \
+         ../limesurvey/upload/ || exit -1
     args:
       executable: /bin/bash
       chdir: "/home/pacs/{{pac}}/users/{{user}}/backup"
