@@ -43,7 +43,11 @@ return array(
 			),
 			'showScriptName' => true,
 		),
-	
+
+		'request' => array(
+			'hostInfo' => 'https://{{custom_domain}}/',
+		),
+
 	),
 	// For security issue : it's better to set runtimePath out of web access
 	// Directory must be readable and writable by the webuser

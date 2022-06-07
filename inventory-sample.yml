@@ -5,6 +5,7 @@ limesurvey:
       ansible_ssh_user: xyz00
       pac: xyz00
       domain: survey.example.org
+      custom_domain: survey.example.org
       user: survey
       password: testpassw0rd_changeme
 
@@ -20,4 +21,4 @@ limesurvey:
       sessionname: 16CAPITALCHARACTERS
 
       # see https://community.limesurvey.org/downloads/
-      limesurvey_release: 5.3.18+220530
+      limesurvey_release: 5.3.19+220607
