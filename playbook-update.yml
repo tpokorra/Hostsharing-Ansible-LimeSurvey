@@ -22,6 +22,7 @@
          ../limesurvey/upload/ || exit -1
     args:
       executable: /bin/bash
+      warn: false
       chdir: "/home/pacs/{{pac}}/users/{{user}}/backup"
 
   - name: drop limesurvey directory
@@ -47,6 +48,7 @@
       tar xzf backup/backup-`date +'%Y%m%d'`.tar.gz
     args:
       executable: /bin/bash
+      warn: false
       chdir: "/home/pacs/{{pac}}/users/{{user}}"
 
   - name: update limesurvey
