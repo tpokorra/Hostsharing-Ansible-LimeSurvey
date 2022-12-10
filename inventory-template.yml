@@ -21,7 +21,7 @@ limesurvey:
       sessionname: {{password2}}
 
       # see https://community.limesurvey.org/downloads/
-      limesurvey_release: 5.4.12+221121
+      limesurvey_release: 5.4.14+221205
 
       SaasActivationPassword: {{SaasActivationPassword}}
       SaasInstanceStatus: {{SaasInstanceStatus}}
