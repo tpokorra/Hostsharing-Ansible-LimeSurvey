@@ -21,4 +21,4 @@ limesurvey:
       sessionname: 16CAPITALCHARACTERS
 
       # see https://community.limesurvey.org/downloads/
-      limesurvey_release: 5.6.1+230123
+      limesurvey_release: 5.6.3+230130
