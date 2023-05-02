@@ -28,7 +28,7 @@
     become_user: "{{pac}}-{{user}}"
     unarchive:
       creates: /home/pacs/{{pac}}/users/{{user}}/limesurvey
-      src: https://download.limesurvey.org/latest-stable-release/limesurvey{{limesurvey_release}}.zip
+      src: https://download.limesurvey.org/latest-5.x/limesurvey{{limesurvey_release}}.zip
       remote_src: yes
       dest: /home/pacs/{{pac}}/users/{{user}}
 
